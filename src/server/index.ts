@@ -7,7 +7,7 @@ import { adminRoutes } from "./routes/admin.js";
 
 const app = Fastify({ logger: true });
 
-await app.register(cors, { origin: "http://localhost:5173" });
+await app.register(cors, { origin: "*" });
 
 // Inicializace DB při startu
 initDb();
@@ -21,9 +21,10 @@ await app.register(adminRoutes);
 app.get("/api/health", async () => ({ ok: true, time: new Date().toISOString() }));
 
 try {
-  await app.listen({ port: 3000, host: "127.0.0.1" });
-  console.log("\n✅ Backend běží na http://localhost:3000");
-  console.log("📋 Admin API: http://localhost:3000/api/inquiries\n");
+  const port = parseInt(process.env.PORT ?? "3000");
+  await app.listen({ port, host: "0.0.0.0" });
+  console.log(`\n✅ Backend běží na portu ${port}`);
+  console.log("📋 Admin API: /api/inquiries\n");
 } catch (err) {
   app.log.error(err);
   process.exit(1);

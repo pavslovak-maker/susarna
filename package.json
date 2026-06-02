@@ -2,6 +2,9 @@
   "name": "susarna-core",
   "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
     "test": "tsx --test test/*.test.ts",
     "server": "tsx watch src/server/index.ts",
